@@ -1,0 +1,1 @@
+INSERT OR IGNORE INTO categories (name, description) VALUES ('Teologia Sistemática',''),('História da Igreja',''),('Bíblia e Comentários',''),('Vida Cristã',''),('Apologética',''),('Literatura Infantil','');

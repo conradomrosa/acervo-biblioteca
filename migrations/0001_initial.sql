@@ -1,0 +1,13 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT, mime_type TEXT NOT NULL CHECK (mime_type IN ('image/jpeg','image/png','image/webp')), content BLOB NOT NULL, size INTEGER NOT NULL CHECK (size > 0), created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE settings (id INTEGER PRIMARY KEY CHECK (id = 1), library_name TEXT NOT NULL, site_title TEXT NOT NULL, primary_color TEXT NOT NULL DEFAULT '#315c48' CHECK (length(primary_color) = 7 AND substr(primary_color, 1, 1) = '#'), banner_image_id INTEGER REFERENCES images(id));
+CREATE TABLE categories (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, description TEXT);
+CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, author TEXT NOT NULL, isbn TEXT, description TEXT, cover_image_id INTEGER REFERENCES images(id), category_id INTEGER NOT NULL REFERENCES categories(id), created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, archived INTEGER NOT NULL DEFAULT 0 CHECK (archived IN (0,1)));
+CREATE TABLE copies (id INTEGER PRIMARY KEY AUTOINCREMENT, book_id INTEGER NOT NULL REFERENCES books(id), code TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1 CHECK (active IN (0,1)), UNIQUE(book_id, code));
+CREATE TABLE loans (id INTEGER PRIMARY KEY AUTOINCREMENT, copy_id INTEGER NOT NULL REFERENCES copies(id), borrower_name TEXT NOT NULL, loan_date TEXT NOT NULL, due_date TEXT NOT NULL, returned_at TEXT, CHECK (due_date >= loan_date), CHECK (julianday(due_date) - julianday(loan_date) BETWEEN 0 AND 14));
+CREATE UNIQUE INDEX one_active_loan_per_copy ON loans(copy_id) WHERE returned_at IS NULL;
+CREATE INDEX books_search ON books(title, author);
+CREATE INDEX loans_due ON loans(due_date) WHERE returned_at IS NULL;
+CREATE TABLE librarians (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, username TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE sessions (id TEXT PRIMARY KEY, librarian_id INTEGER NOT NULL REFERENCES librarians(id) ON DELETE CASCADE, csrf_token TEXT NOT NULL, expires_at INTEGER NOT NULL);
+INSERT INTO settings (id, library_name, site_title) VALUES (1, 'Biblioteca da Igreja', 'iChrysostom');
