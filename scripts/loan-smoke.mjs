@@ -34,7 +34,7 @@ assert(copyId, 'ID do exemplar não foi encontrado no formulário');
 const longDueDate = '2026-12-01';
 response = await fetch(`${base}/admin/emprestimos`, { method: 'POST', headers: { Cookie: cookie }, body: new URLSearchParams({ csrf, copy_id: copyId, borrower_name: `Pessoa ${suffix}`, loan_date: '2026-10-01', due_date: longDueDate }), redirect: 'manual' });
 assert(response.status === 303, 'empréstimo não foi registrado');
-assert(sql(`SELECT due_date FROM loans WHERE copy_id=${copyId} AND returned_at IS NULL`)[0]?.due_date === longDueDate, 'prazo superior a 14 dias não foi persistido');
+assert(sql(`SELECT due_date FROM loans WHERE copy_id=${copyId} AND returned_at IS NULL`)[0]?.due_date === longDueDate, 'prazo estendido não foi persistido');
 
 response = await fetch(`${base}/admin/emprestimos/novo`, { headers: { Cookie: cookie } });
 html = await response.text();
