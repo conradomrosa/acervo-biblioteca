@@ -1,0 +1,4 @@
+SESSION_SECRET=gere-um-segredo-com-32-ou-mais-caracteres
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=troque-esta-senha
+ADMIN_NAME=Bibliotecário
