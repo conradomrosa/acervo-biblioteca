@@ -6,6 +6,8 @@
        width="350">
 </p>
 
+**Uma biblioteca de igreja, acessível pelo navegador.**
+
 <p align="center">
   <a href="https://www.typescriptlang.org/">
     <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
@@ -42,11 +44,15 @@
   </a>
 </p>
 
-**Uma biblioteca de igreja, acessível pelo navegador.**
-
 O **iChrysostom** é um sistema de gestão de empréstimos de livros físicos, criado para organizar o acervo de uma biblioteca de igreja. 
 
 Qualquer pessoa pode consultar os livros e sua disponibilidade, sem cadastro. O bibliotecário administra o acervo e registra os empréstimos em uma área protegida; a retirada dos livros continua sendo presencial.
+
+<p align="center">
+  <img src="./assets/screenshot.png"
+       alt="Prévia visual do iChrysostom"
+       width="100%">
+</p>
 
 > **Status:** aplicação desenvolvida e testada localmente. Publicação na Cloudflare realizada (o link é privado).
 
