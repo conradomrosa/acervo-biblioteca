@@ -1,0 +1,31 @@
+{
+  "name": "ichrysostom",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev public --compatibility-date=2026-01-01",
+    "test": "npm run db:migrate:test && vitest run --maxWorkers=1 --minWorkers=1",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit",
+    "db:migrate:local": "wrangler d1 migrations apply ichrysostom --local",
+    "db:migrate:test": "node scripts/migrate-test-db.mjs",
+    "db:seed:security": "node scripts/seed-test-admin.mjs",
+    "db:migrate:remote": "wrangler d1 migrations apply ichrysostom --remote",
+    "deploy": "wrangler pages deploy public",
+    "admin:hash": "node scripts/init-admin.mjs",
+    "test:banner": "node scripts/banner-smoke.mjs",
+    "test:loans": "node scripts/loan-smoke.mjs",
+    "test:covers": "node scripts/cover-smoke.mjs",
+    "audit:images": "node scripts/audit-images.mjs",
+    "test:admin": "node scripts/admin-smoke.mjs",
+    "test:security": "node scripts/security-smoke.mjs"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261007.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.34.0"
+  }
+}
